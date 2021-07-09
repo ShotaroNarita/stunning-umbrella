@@ -19,6 +19,8 @@
     "webpack-cli": "^4.7.2"
   },
   "dependencies": {
-    "babylonjs": "^4.2.0"
+    "babylonjs": "^4.2.0",
+    "vue": "^2.6.14",
+    "vuex": "^3.6.2"
   }
 }
