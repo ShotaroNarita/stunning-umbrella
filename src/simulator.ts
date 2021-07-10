@@ -7,8 +7,7 @@ class Simulator {
     engine!: BABYLON.Engine;
     scene!: BABYLON.Scene;
     manip!: Manipulator;
-
-    private isMoving: boolean = false;
+    cursor!: BABYLON.Mesh;
 
     canvasid: string;
 
@@ -30,6 +29,13 @@ class Simulator {
         const ground = BABYLON.MeshBuilder.CreateGround("ground", { width: 1000, height: 1000 });
         this.scene.addMesh(ground)
 
+        this.cursor = BABYLON.MeshBuilder.CreateBox('cursor', { size: 50 });
+        const mat = new BABYLON.StandardMaterial('smat', this.scene);
+        mat.wireframe = true;
+        this.cursor.material = mat;
+        this.scene.addMesh(this.cursor);
+        this.cursor.position = new BABYLON.Vector3(100, 100, 100);
+
         const ground_material = new BABYLON.StandardMaterial("groundMat", this.scene);
         ground_material.diffuseColor = BABYLON.Color3.Green();
         ground.material = ground_material;
@@ -41,6 +47,7 @@ class Simulator {
         axis.locate(this.scene);
 
         this.engine.runRenderLoop(() => {
+            this.manip.tick();
             this.scene.render();
         });
 
@@ -50,10 +57,15 @@ class Simulator {
     }
 
     update(theta1: number, theta2: number, theta3: number) {
-        this.manip.arms[0].set_angle(theta1);
-        this.manip.arms[1].set_angle(theta2);
-        this.manip.arms[2].set_angle(theta3);
-        this.scene.render();
+        this.manip.rotate(theta1, theta2, theta3);
+    }
+
+    solve(x: number, y: number, z: number) {
+        this.cursor.position = new BABYLON.Vector3(x, y, z);
+    }
+
+    go(x: number, y: number, z: number){
+        this.manip.go(x, y, z);
     }
 }
 

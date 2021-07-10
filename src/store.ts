@@ -9,6 +9,10 @@ const store = new Vuex.Store({
         simulator: new Simulator('maincanvas')
     },
 
+    getters: {
+        simulator: (state) => state.simulator,
+    },
+
     actions: {
         init({ state }) {
             state.simulator.init();
@@ -16,6 +20,14 @@ const store = new Vuex.Store({
 
         update({ state }, payload) {
             state.simulator.update(payload.theta1, payload.theta2, payload.theta3);
+        },
+
+        solve({state}, payload){
+            state.simulator.solve(payload.x, payload.y, payload.z);
+        },
+
+        go({state}, payload){
+            state.simulator.go(payload.x, payload.y, payload.z);
         }
     },
 });

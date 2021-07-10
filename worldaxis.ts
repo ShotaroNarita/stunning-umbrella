@@ -27,7 +27,6 @@ class WorldAxis {
 
         this.axisY.color = new BABYLON.Color3(0, 1, 0);
 
-
         this.axisZ = BABYLON.Mesh.CreateLines("axisZ", [
             BABYLON.Vector3.Zero(),
             new BABYLON.Vector3(0, 0, size),
